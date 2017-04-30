@@ -3,6 +3,6 @@ var serveStatic = require('serve-static');
 
 var app = express();
 
-app.use(serveStatic('bin'));
-app.use('/src', serveStatic('src'));
+app.use(serveStatic('.'));
+app.use(serveStatic('app'));
 app.listen(5858);
