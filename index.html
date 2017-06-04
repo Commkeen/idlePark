@@ -9,6 +9,8 @@
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script src="app/gameController.js"></script>
+  <script src="app/buildingService.js"></script>
+  <script src="app/buildingListController.js"></script>
 </head>
 
 <body>
@@ -17,19 +19,23 @@
       <div class="section-left-top">
         Idle Park <br />
         Ticks: {{ticksTotal}} <br />
-        Cash: <br />
-        Lifetime visitors: <br />
-        Visitors/hour: <br />
-        Income/visitor: <br />
+        Cash: ${{(money/100).toFixed(2)}}<br />
+        Lifetime visitors: {{visitorsTotal.toFixed(0)}}<br />
+        Visitors/hour: {{visitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
+        Income/visitor: ${{(incomePerVisitor/100).toFixed(2)}}<br />
 
-
-        <button type='button' class='btn btn-primary btn-lg'>Test button</button>
       </div>
       <div class="section-left-bottom">
         
       </div>
     </div>
     <div class="section-center">
+      <div class="buildingList" ng-controller="buildingListController">
+          <div class="buildingButtonContainer" ng-repeat="building in buildings">
+            <button type='button' class='btn btn-primary btn-lg' ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.baseCost/100).toFixed(2)}} {{building.count}}</button> <br />
+            <br />
+          </div>
+      </div>
     </div>
     <div class="section-right">
       <div class="section-right-top">
