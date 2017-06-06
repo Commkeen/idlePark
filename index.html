@@ -11,6 +11,7 @@
   <script src="app/gameController.js"></script>
   <script src="app/buildingService.js"></script>
   <script src="app/buildingListController.js"></script>
+  <script src="app/statService.js"></script>
 </head>
 
 <body>
@@ -32,7 +33,7 @@
     <div class="section-center">
       <div class="buildingList" ng-controller="buildingListController">
           <div class="buildingButtonContainer" ng-repeat="building in buildings">
-            <button type='button' class='btn btn-primary btn-lg' ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.baseCost/100).toFixed(2)}} {{building.count}}</button> <br />
+            <button type='button' class='btn btn-primary btn-lg' ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.nextCost/100).toFixed(2)}} {{building.count}}</button> <br />
             <br />
           </div>
       </div>

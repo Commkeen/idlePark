@@ -2,42 +2,27 @@ var app = angular.module('gameApp', ['ui.bootstrap']);
 
 angular.module('gameApp').
 controller('GameController',
-  function($scope, $interval, buildingService) {
+  function($scope, $interval, buildingService, statService) {
 
-    $scope.baseVisitorRateCap = 5;
+    $scope.updateValues = function() {
+      $scope.baseVisitorRateCap = statService.baseVisitorRateCap;
     
-    $scope.ticksPerSecond = 100;
-    $scope.ticksPerGameHour = 500;
-    $scope.ticksTotal = 0;
+      $scope.ticksPerSecond = statService.ticksPerSecond;
+      $scope.ticksPerGameHour = statService.ticksPerGameHour;
+      $scope.ticksTotal = statService.ticksTotal;
 
-    $scope.money = 500;
-    $scope.visitorsTotal = 0;
-    $scope.incomePerVisitor = 0;
-    $scope.visitorRateCap = 0;
-    $scope.visitorRate = 0;
-
-    recalculateStats = function(){
-      $scope.incomePerVisitor = 0;
-      $scope.visitorRateCap = 0;
-      $scope.visitorRate = 0;
-      for (var i = 0; i < buildingService.buildingCount; i++)
-      {
-        var b = buildingService.buildings[i];
-        $scope.visitorRateCap += b.visitorRateCap * b.count;
-        $scope.visitorRate += b.visitorRate * b.count;
-        $scope.incomePerVisitor += b.incomePerVisitor * b.count;
-      }
-      if ($scope.visitorRate > $scope.visitorRateCap) {$scope.visitorRate = $scope.visitorRateCap;}
-
-      var visitorsThisTick = $scope.visitorRate / $scope.ticksPerGameHour;
-      $scope.visitorsTotal += visitorsThisTick;
-      $scope.money += visitorsThisTick*$scope.incomePerVisitor;
-
-    }
+      $scope.money = statService.money;
+      $scope.visitorsTotal = statService.visitorsTotal;
+      $scope.incomePerVisitor = statService.incomePerVisitor;
+      $scope.visitorRateCap = statService.visitorRateCap;
+      $scope.visitorRate = statService.visitorRate;
+    };
+    $scope.updateValues();
 
     $scope.tick = function() {
-      $scope.ticksTotal = $scope.ticksTotal + 1;
-      recalculateStats();
+      statService.ticksTotal = statService.ticksTotal + 1;
+      statService.recalculateStats();
+      $scope.updateValues();
     };
 
     $scope.resetGame = function() {
@@ -47,7 +32,7 @@ controller('GameController',
 
     $interval(function() {
       $scope.tick();
-    }, 1000 / $scope.ticksPerSecond);
+    }, 1000 / statService.ticksPerSecond);
     
 
   });
