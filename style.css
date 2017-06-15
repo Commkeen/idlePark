@@ -1,0 +1,58 @@
+.flex-grid{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.section-title{
+    border: 2px dashed #22CC00;
+    flex: 5 100%;
+    width: 100%;
+}
+.section-left{
+  flex: 1;
+  height: 100%;
+}
+
+.section-left-top{
+  border: 2px dashed #CC0088;
+  text-align: center;
+}
+
+.cash{
+    font-family: 'Mogra';
+    font-size: 40px;
+    color: #22CC00;
+}
+
+.section-left-bottom{
+  border: 2px dashed #8800CC;
+}
+
+.section-center{
+  border: 2px dashed #CC00CC;
+  flex: 3;
+}
+
+.section-right{
+  flex: 1;
+}
+
+.section-right-top{
+  min-height: 400px;
+  width: 100%;
+  border: 2px dashed #CCCC00;
+}
+
+.section-right-center{
+  min-height: 200px;
+  width: 100%;
+  top: 400px;
+  border: 2px dashed #22CC00;
+}
+
+.section-right-bottom{
+  top: 600px;
+  bottom: 0;
+  border: 2px dashed #00CCCC;
+  width: 100%;
+}

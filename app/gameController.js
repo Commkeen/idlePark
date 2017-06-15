@@ -4,6 +4,8 @@ angular.module('gameApp').
 controller('GameController',
   function($scope, $interval, buildingService, statService) {
 
+    
+
     $scope.updateValues = function() {
       $scope.baseVisitorRateCap = statService.baseVisitorRateCap;
     
@@ -18,6 +20,15 @@ controller('GameController',
       $scope.visitorRate = statService.visitorRate;
     };
     $scope.updateValues();
+
+    $scope.getDateTime = function() {
+      let currentDateInMs = statService.startDate.valueOf();
+      let hoursToAdd = statService.ticksTotal / statService.ticksPerGameHour;
+      let msToAdd = hoursToAdd * 60 * 60 * 1000;
+      let dateString = new Date(currentDateInMs + msToAdd).toLocaleString();
+      let amPmString = dateString.slice(-3,dateString.length);
+      return dateString.slice(0, dateString.length - 9) + amPmString;
+    }
 
     $scope.tick = function() {
       statService.ticksTotal = statService.ticksTotal + 1;

@@ -8,6 +8,8 @@ function statService($rootScope, buildingService) {
     
     this.ticksPerSecond = 100;
     this.ticksPerGameHour = 500;
+    this.startDate = new Date(1950, 5, 13, 8);
+
     this.ticksTotal = 0;
 
     this.money = 500;
@@ -30,6 +32,7 @@ function statService($rootScope, buildingService) {
       if (this.visitorRate > this.visitorRateCap) {this.visitorRate = this.visitorRateCap;}
 
       var visitorsThisTick = this.visitorRate / this.ticksPerGameHour;
+
       this.visitorsTotal += visitorsThisTick;
       this.money += visitorsThisTick*this.incomePerVisitor;
 

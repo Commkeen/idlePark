@@ -7,6 +7,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="app/gameController.js"></script>
   <script src="app/buildingService.js"></script>
@@ -15,19 +16,21 @@
 </head>
 
 <body>
-  <div ng-app="gameApp" ng-controller="GameController">
+  <div ng-app="gameApp" ng-controller="GameController" class="flex-grid">
+    <div class="section-title">
+      Idle Park
+    </div>
     <div class="section-left">
       <div class="section-left-top">
-        Idle Park <br />
-        Ticks: {{ticksTotal}} <br />
-        Cash: ${{(money/100).toFixed(2)}}<br />
+        <!--Ticks: {{ticksTotal}} <br />-->
+        <span class="cash">${{(money/100).toFixed(2)}}</span><br />
         Lifetime visitors: {{visitorsTotal.toFixed(0)}}<br />
-        Visitors/hour: {{visitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
-        Income/visitor: ${{(incomePerVisitor/100).toFixed(2)}}<br />
+        {{getDateTime()}}
 
       </div>
       <div class="section-left-bottom">
-        
+        Visitors/hour: {{visitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
+        Income/visitor: ${{(incomePerVisitor/100).toFixed(2)}}<br />
       </div>
     </div>
     <div class="section-center">
