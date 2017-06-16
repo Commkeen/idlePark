@@ -31,6 +31,11 @@
 .section-center{
   border: 2px dashed #CC00CC;
   flex: 3;
+  padding: 10px;
+}
+
+.btn-primary{
+  margin-bottom: 10px;
 }
 
 .section-right{

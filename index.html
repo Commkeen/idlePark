@@ -34,11 +34,19 @@
       </div>
     </div>
     <div class="section-center">
+      <tabset active="activeTab">
+        <tab index="0" heading="Attractions"></tab>
+        <tab index="1" heading="Politics"></tab>
+        <tab index="2" heading="Energy"></tab>
+      </tabset>
+      <br />
       <div class="buildingList" ng-controller="buildingListController">
           <div class="buildingButtonContainer" ng-repeat="building in buildings">
-            <button type='button' class='btn btn-primary btn-lg' ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.nextCost/100).toFixed(2)}} {{building.count}}</button> <br />
+            <button type='button' class='btn btn-primary' ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.nextCost/100).toFixed(2)}} {{building.count}}</button>
             <br />
           </div>
+      </div>
+      <div class="upgradeList">
       </div>
     </div>
     <div class="section-right">
