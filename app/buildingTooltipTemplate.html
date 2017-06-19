@@ -1,0 +1,7 @@
+<div>
+    {{building.description}}
+    <hr />
+    <div ng-if="building.incomePerVisitor > 0">${{(building.incomePerVisitor/100).toFixed(2)}} per visitor</div>
+    <div ng-if="building.visitorRate > 0">{{(building.visitorRate)}} visitors/hr</div>
+    <div ng-if="building.visitorRateCap > 0">{{(building.visitorRateCap)}} max visitors/hr</div>
+</div>

@@ -2,7 +2,7 @@ var app = angular.module('gameApp', ['ui.bootstrap']);
 
 angular.module('gameApp').
 controller('GameController',
-  function($scope, $interval, buildingService, statService) {
+  function($scope, $interval, buildingService, statService, techService) {
 
     
 
