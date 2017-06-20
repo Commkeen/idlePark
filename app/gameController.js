@@ -18,6 +18,10 @@ controller('GameController',
       $scope.incomePerVisitor = statService.incomePerVisitor;
       $scope.visitorRateCap = statService.visitorRateCap;
       $scope.visitorRate = statService.visitorRate;
+      $scope.totalTerritory = statService.totalTerritory;
+      $scope.usedTerritory = statService.usedTerritory;
+      $scope.influence = statService.influence;
+      $scope.influenceRate = statService.influenceRate;
     };
     $scope.updateValues();
 

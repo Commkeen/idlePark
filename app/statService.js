@@ -18,23 +18,66 @@ function statService($rootScope, buildingService) {
     this.visitorRateCap = 0;
     this.visitorRate = 0;
 
-    this.recalculateStats = function(){
-      this.incomePerVisitor = 0;
-      this.visitorRateCap = this.baseVisitorRateCap;
-      this.visitorRate = 0;
+    this.baseTerritory = 150;
+    this.totalTerritory = 0;
+    this.usedTerritory = 0;
+    this.influence = 0;
+    this.influenceRate = 0;
+
+
+    recalculateVisitors = function(){
+      self.visitorRateCap = self.baseVisitorRateCap;
+      self.visitorRate = 0;
       for (var i = 0; i < buildingService.buildingCount; i++)
       {
         var b = buildingService.buildings[i];
-        this.visitorRateCap += b.visitorRateCap * b.count;
-        this.visitorRate += b.visitorRate * b.count;
-        this.incomePerVisitor += b.incomePerVisitor * b.count;
+        self.visitorRateCap += b.visitorRateCap * b.count;
+        self.visitorRate += b.visitorRate * b.count;
+        self.incomePerVisitor += b.incomePerVisitor * b.count;
       }
-      if (this.visitorRate > this.visitorRateCap) {this.visitorRate = this.visitorRateCap;}
+      if (self.visitorRate > self.visitorRateCap) {self.visitorRate = self.visitorRateCap;}
 
-      var visitorsThisTick = this.visitorRate / this.ticksPerGameHour;
+      var visitorsThisTick = self.visitorRate / self.ticksPerGameHour;
 
-      this.visitorsTotal += visitorsThisTick;
-      this.money += visitorsThisTick*this.incomePerVisitor;
+      self.visitorsTotal += visitorsThisTick;
+    }
+
+    recalculateMoney = function(){
+      self.incomePerVisitor = 0;
+      for (var i = 0; i < buildingService.buildingCount; i++)
+      {
+        var b = buildingService.buildings[i];
+        self.incomePerVisitor += b.incomePerVisitor * b.count;
+      }
+      var visitorsThisTick = self.visitorRate / self.ticksPerGameHour;
+      self.money += visitorsThisTick*self.incomePerVisitor;
+    }
+
+    recalculateTerritory = function(){
+      self.totalTerritory = self.baseTerritory;
+      for (var i = 0; i < buildingService.buildingCount; i++)
+      {
+        var b = buildingService.buildings[i];
+        self.totalTerritory += b.territoryGain * b.count;
+      }
+    }
+
+    recalculateInfluence = function(){
+      self.influenceRate = 0;
+      for (var i = 0; i < buildingService.buildingCount; i++)
+      {
+        var b = buildingService.buildings[i];
+        self.influenceRate += b.influenceRate * b.count;
+      }
+      self.influence += self.influenceRate / self.ticksPerGameHour;
+    }
+
+
+    this.recalculateStats = function(){
+      recalculateVisitors();
+      recalculateMoney();
+      recalculateTerritory();
+      recalculateInfluence();
 
     }
 }

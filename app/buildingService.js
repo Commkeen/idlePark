@@ -77,13 +77,36 @@ function buildingService($rootScope) {
         return -1;
     }
 
+    unlockBuilding = function(name) {
+        var index = getBuildingIndex(name);
+        if (index >= 0)
+        {
+            self.buildings[index].unlock();
+        }
+    }
+
     this.addBuilding = function(index, amount){
-        this.buildings[index].count += amount;
-        this.buildings[index].nextCost += this.buildings[index].nextCost * this.buildings[index].costMultiplier;
+        var b = this.buildings[index];
+        b.count += amount;
+        b.nextCost += b.nextCost * b.costMultiplier;
+
+        //Special unlock logic
+        if (b.name == "Swingset" && b.count == 1){unlockBuilding("Bench");}
+        if (b.name == "Bench" && b.count == 1){unlockBuilding("Donation Box");}
+
         $rootScope.$emit('building:update');
     }
 
-    registerBuilding("Swingset").setCashCost(100, 0.05).setAttractionValues(2,1,0.2);
-    registerBuilding("Bench").setCashCost(120, 0.05).setAttractionValues(0,2,0.1);
-    registerBuilding("Donation Box").setCashCost(110, 0.03).setAttractionValues(4,0,0);
+    $rootScope.$on('building:unlock', function (event, data) {
+        unlockBuilding(data);
+    })
+
+    registerBuilding("Swingset").setCashCost(100, 0.15).setAttractionValues(2,3,0.2).unlock();
+    registerBuilding("Bench").setCashCost(120, 0.15).setAttractionValues(0,0.1,2);
+    registerBuilding("Donation Box").setCashCost(110, 0.15).setAttractionValues(4,0,0);
+
+    registerBuilding("Corn Dog Stand").setCashCost(150, 0.15).setTerritoryCost(8).setAttractionValues(25,3,0.1);
+
+    registerBuilding("Buy Acre").setCashCost(100, 0.45).setInfluenceCost(1,0.2).setPoliticsValues(100,0,0);
+    registerBuilding("Grassroots Supporter").setCashCost(100, 0.35).setInfluenceCost(10,0.15).setPoliticsValues(0,0,1);
 }

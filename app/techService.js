@@ -5,6 +5,8 @@ function tech(name){
     this.visible = true;
     this.purchased = false;
     
+    this.buildingToUnlock = "";
+    
     this.setCashCost = function(cost){
         this.cost = cost;
         return this;
@@ -15,6 +17,10 @@ function tech(name){
     }
     this.setVisibilityPrereq = function(prereqName){
         this.visibilityPrereq = prereqName;
+        return this;
+    }
+    this.setBuildingToUnlock = function(buildingName){
+        this.buildingToUnlock = buildingName;
         return this;
     }
 }
@@ -35,7 +41,6 @@ function techService($rootScope) {
         return self.techs[self.techCount-1];
     }
 
-
     getTechIndex = function(name) {
         for (var i = 0; i < self.techCount; i++)
         {
@@ -48,8 +53,14 @@ function techService($rootScope) {
         return -1;
     }
 
-    registerTech("Refreshment Sales").setCashCost(1000).setVisitorRequirement(50);
-    registerTech("Expansion").setCashCost(10000).setVisitorRequirement(100);
-    registerTech("Municipal Presence").setCashCost(15000).setVisitorRequirement(150);
+    this.purchaseTech = function(index) {
+        var tech = self.techs[index];
+        tech.purchased = true;
+        $rootScope.$emit('building:unlock', tech.buildingToUnlock);
+    }
+
+    registerTech("Refreshment Sales").setCashCost(100).setVisitorRequirement(5).setBuildingToUnlock("Corn Dog Stand");
+    registerTech("Expansion").setCashCost(10000).setVisitorRequirement(100).setBuildingToUnlock("Buy Acre");
+    registerTech("Municipal Presence").setCashCost(15000).setVisitorRequirement(150).setBuildingToUnlock("Grassroots Supporter");
     registerTech("Carnival Rides").setCashCost(20000).setVisitorRequirement(500);
 }

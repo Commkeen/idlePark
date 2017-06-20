@@ -32,11 +32,16 @@
       <div class="section-left-bottom">
         Visitors/hour: {{visitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
         Income/visitor: ${{(incomePerVisitor/100).toFixed(2)}}<br />
+        <br />
+        {{(usedTerritory/100).toFixed(2)}}/{{(totalTerritory/100).toFixed(2)}} Acres<br />
+        <br />
+        Influence: {{(influence).toFixed(0)}}<br />
+        Influence/hr: {{influenceRate.toFixed(2)}}
       </div>
     </div>
     <div class="section-center">
       <div class="buildingList" ng-controller="buildingListController">
-        <div class="buildingButtonContainer" ng-repeat="building in buildings">
+        <div class="buildingButtonContainer" ng-repeat="building in buildings" ng-if="isBuildingVisible(building.index)">
           <button type='button' class='btn' uib-popover-template="'app/buildingTooltipTemplate.html'" popover-trigger="'mouseenter'" popover-placement="auto bottom" ng-class="canAffordBuilding(building.index)?'btn-primary':'btn-disabled'" 
                   ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.nextCost/100).toFixed(2)}} {{building.count}}</button>
         </div>

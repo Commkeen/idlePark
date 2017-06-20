@@ -26,6 +26,7 @@
 
 .section-left-bottom{
   border: 2px dashed #8800CC;
+  padding: 10px;
 }
 
 .section-center{
@@ -63,21 +64,9 @@
 }
 
 .tipbox{
-  border: 1px solid blue;
-  background: #DDDDDD;
-  overflow: hidden;
-  position: fixed;
-  display: none;
-  z-index: 10;
-  padding: 5px;
+  font-size: 12px;
 }
 
-.tipbox hr{
-  background: black;
-  height: 1px;
-  margin: 5px;
-}
-
-.buildingButtonContainer:hover .tipbox{
-  display: block;
+.tipbox hr {
+  margin: 10px 0 10px 0;
 }

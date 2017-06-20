@@ -1,5 +1,10 @@
-<div>
+<div class='tipbox'>
     {{building.description}}
+    <hr />
+    Costs:
+    <div ng-if="building.nextCost > 0">${{(building.nextCost/100).toFixed(2)}}</div>
+    <div ng-if="building.territoryCost > 0">{{(building.territoryCost/100).toFixed(2)}} acres</div>
+    <div ng-if="building.nextInfluenceCost > 0">{{(building.nextInfluenceCost).toFixed(0)}}</div>
     <hr />
     <div ng-if="building.incomePerVisitor > 0">${{(building.incomePerVisitor/100).toFixed(2)}} per visitor</div>
     <div ng-if="building.visitorRate > 0">{{(building.visitorRate)}} visitors/hr</div>

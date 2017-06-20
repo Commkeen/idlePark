@@ -18,6 +18,7 @@ function techListController($scope, techService, statService){
     }
 
     $scope.onClickTech = function(index){
-        //TODO
+        statService.money -= techService.techs[index].cost;
+        techService.purchaseTech(index);
     }
 }
