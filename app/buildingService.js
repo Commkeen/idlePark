@@ -107,6 +107,6 @@ function buildingService($rootScope) {
 
     registerBuilding("Corn Dog Stand").setCashCost(150, 0.15).setTerritoryCost(8).setAttractionValues(25,3,0.1);
 
-    registerBuilding("Buy Acre").setCashCost(100, 0.45).setInfluenceCost(1,0.2).setPoliticsValues(100,0,0);
-    registerBuilding("Grassroots Supporter").setCashCost(100, 0.35).setInfluenceCost(10,0.15).setPoliticsValues(0,0,1);
+    registerBuilding("Land Grant").setCashCost(10000, 0.45).setInfluenceCost(1,1.1).setPoliticsValues(100,0,0);
+    registerBuilding("Grassroots Supporter").setCashCost(10000, 0.35).setInfluenceCost(0,0).setPoliticsValues(0,0,1);
 }

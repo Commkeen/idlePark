@@ -30,7 +30,10 @@
 
       </div>
       <div class="section-left-bottom">
-        Visitors/hour: {{visitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
+        Visitors/hour: {{baseVisitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
+        <span ng-if="baseVisitorRate >= visitorRateCap">Your park is too small!</span>
+        <br />
+        <br />
         Income/visitor: ${{(incomePerVisitor/100).toFixed(2)}}<br />
         <br />
         {{(usedTerritory/100).toFixed(2)}}/{{(totalTerritory/100).toFixed(2)}} Acres<br />

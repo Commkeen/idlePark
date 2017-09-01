@@ -17,7 +17,7 @@ controller('GameController',
       $scope.visitorsTotal = statService.visitorsTotal;
       $scope.incomePerVisitor = statService.incomePerVisitor;
       $scope.visitorRateCap = statService.visitorRateCap;
-      $scope.visitorRate = statService.visitorRate;
+      $scope.baseVisitorRate = statService.baseVisitorRate;
       $scope.totalTerritory = statService.totalTerritory;
       $scope.usedTerritory = statService.usedTerritory;
       $scope.influence = statService.influence;

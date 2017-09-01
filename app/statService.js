@@ -16,6 +16,8 @@ function statService($rootScope, buildingService) {
     this.visitorsTotal = 0;
     this.incomePerVisitor = 0;
     this.visitorRateCap = 0;
+    this.baseVisitorRate = 0;
+    this.visitorRateAfterCap = 0;
     this.visitorRate = 0;
 
     this.baseTerritory = 150;
@@ -27,17 +29,18 @@ function statService($rootScope, buildingService) {
 
     recalculateVisitors = function(){
       self.visitorRateCap = self.baseVisitorRateCap;
-      self.visitorRate = 0;
+      self.baseVisitorRate = 0;
       for (var i = 0; i < buildingService.buildingCount; i++)
       {
         var b = buildingService.buildings[i];
         self.visitorRateCap += b.visitorRateCap * b.count;
-        self.visitorRate += b.visitorRate * b.count;
+        self.baseVisitorRate += b.visitorRate * b.count;
         self.incomePerVisitor += b.incomePerVisitor * b.count;
       }
-      if (self.visitorRate > self.visitorRateCap) {self.visitorRate = self.visitorRateCap;}
+      self.visitorRateAfterCap = self.baseVisitorRate;
+      if (self.visitorRateAfterCap > self.visitorRateCap) {self.visitorRateAfterCap = self.visitorRateCap;}
 
-      var visitorsThisTick = self.visitorRate / self.ticksPerGameHour;
+      var visitorsThisTick = self.visitorRateAfterCap / self.ticksPerGameHour;
 
       self.visitorsTotal += visitorsThisTick;
     }
@@ -49,7 +52,7 @@ function statService($rootScope, buildingService) {
         var b = buildingService.buildings[i];
         self.incomePerVisitor += b.incomePerVisitor * b.count;
       }
-      var visitorsThisTick = self.visitorRate / self.ticksPerGameHour;
+      var visitorsThisTick = self.visitorRateAfterCap / self.ticksPerGameHour;
       self.money += visitorsThisTick*self.incomePerVisitor;
     }
 

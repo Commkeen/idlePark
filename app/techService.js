@@ -60,7 +60,7 @@ function techService($rootScope) {
     }
 
     registerTech("Refreshment Sales").setCashCost(100).setVisitorRequirement(5).setBuildingToUnlock("Corn Dog Stand");
-    registerTech("Expansion").setCashCost(10000).setVisitorRequirement(100).setBuildingToUnlock("Buy Acre");
     registerTech("Municipal Presence").setCashCost(15000).setVisitorRequirement(150).setBuildingToUnlock("Grassroots Supporter");
+    registerTech("Expansion").setCashCost(10000).setVisitorRequirement(100).setBuildingToUnlock("Buy Acre");
     registerTech("Carnival Rides").setCashCost(20000).setVisitorRequirement(500);
 }
