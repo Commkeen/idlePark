@@ -12,18 +12,18 @@ function buildingListController($scope, buildingService, statService){
         var cost = buildingService.buildings[index].nextCost;
         var territoryCost = buildingService.buildings[index].territoryCost;
         var influenceCost = buildingService.buildings[index].nextInfluenceCost;
-        return cost <= statService.money && territoryCost+statService.usedTerritory <= statService.totalTerritory && influenceCost <= statService.influence;
+        return cost <= statService.statModel.money && territoryCost+statService.statModel.usedTerritory <= statService.statModel.totalTerritory && influenceCost <= statService.statModel.influence;
     }
 
     $scope.onClickBuilding = function(index){
         var cost = buildingService.buildings[index].nextCost;
         var territoryCost = buildingService.buildings[index].territoryCost;
         var influenceCost = buildingService.buildings[index].nextInfluenceCost;
-        if (cost <= statService.money && territoryCost+statService.usedTerritory <= statService.totalTerritory && influenceCost <= statService.influence)
+        if (cost <= statService.statModel.money && territoryCost+statService.statModel.usedTerritory <= statService.statModel.totalTerritory && influenceCost <= statService.statModel.influence)
         {
-            statService.money -= cost;
-            statService.usedTerritory += territoryCost;
-            statService.influence -= influenceCost;
+            statService.statModel.money -= cost;
+            statService.statModel.usedTerritory += territoryCost;
+            statService.statModel.influence -= influenceCost;
             buildingService.addBuilding(index, 1);
         }
         

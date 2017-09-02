@@ -4,75 +4,55 @@ statService.$inject = ['$rootScope', 'buildingService'];
 function statService($rootScope, buildingService) {
     var self = this;
 
-    this.baseVisitorRateCap = 5;
-    
-    this.ticksPerSecond = 100;
-    this.ticksPerGameHour = 500;
-    this.startDate = new Date(1950, 5, 13, 8);
-
-    this.ticksTotal = 0;
-
-    this.money = 500;
-    this.visitorsTotal = 0;
-    this.incomePerVisitor = 0;
-    this.visitorRateCap = 0;
-    this.baseVisitorRate = 0;
-    this.visitorRateAfterCap = 0;
-    this.visitorRate = 0;
-
-    this.baseTerritory = 150;
-    this.totalTerritory = 0;
-    this.usedTerritory = 0;
-    this.influence = 0;
-    this.influenceRate = 0;
+    this.statModel = new statModel();
 
 
     recalculateVisitors = function(){
-      self.visitorRateCap = self.baseVisitorRateCap;
-      self.baseVisitorRate = 0;
+      self.statModel.visitorRateCap = self.statModel.baseVisitorRateCap;
+      self.statModel.baseVisitorRate = 0;
       for (var i = 0; i < buildingService.buildingCount; i++)
       {
         var b = buildingService.buildings[i];
-        self.visitorRateCap += b.visitorRateCap * b.count;
-        self.baseVisitorRate += b.visitorRate * b.count;
-        self.incomePerVisitor += b.incomePerVisitor * b.count;
+        self.statModel.visitorRateCap += b.visitorRateCap * b.count;
+        self.statModel.baseVisitorRate += b.visitorRate * b.count;
+        self.statModel.incomePerVisitor += b.incomePerVisitor * b.count;
       }
-      self.visitorRateAfterCap = self.baseVisitorRate;
-      if (self.visitorRateAfterCap > self.visitorRateCap) {self.visitorRateAfterCap = self.visitorRateCap;}
+      self.statModel.visitorRateAfterCap = self.statModel.baseVisitorRate;
+      if (self.statModel.visitorRateAfterCap > self.statModel.visitorRateCap) {self.statModel.visitorRateAfterCap = self.statModel.visitorRateCap;}
 
-      var visitorsThisTick = self.visitorRateAfterCap / self.ticksPerGameHour;
+      var visitorsThisTick = self.statModel.visitorRateAfterCap / self.statModel.ticksPerGameHour;
 
-      self.visitorsTotal += visitorsThisTick;
+      self.statModel.visitorsTotal += visitorsThisTick;
     }
 
     recalculateMoney = function(){
-      self.incomePerVisitor = 0;
+      self.statModel.incomePerVisitor = 0;
       for (var i = 0; i < buildingService.buildingCount; i++)
       {
         var b = buildingService.buildings[i];
-        self.incomePerVisitor += b.incomePerVisitor * b.count;
+        self.statModel.incomePerVisitor += b.incomePerVisitor * b.count;
       }
-      var visitorsThisTick = self.visitorRateAfterCap / self.ticksPerGameHour;
-      self.money += visitorsThisTick*self.incomePerVisitor;
+      var visitorsThisTick = self.statModel.visitorRateAfterCap / self.statModel.ticksPerGameHour;
+      self.statModel.money += visitorsThisTick*self.statModel.incomePerVisitor;
     }
 
     recalculateTerritory = function(){
-      self.totalTerritory = self.baseTerritory;
+      self.statModel.totalTerritory = self.statModel.baseTerritory;
       for (var i = 0; i < buildingService.buildingCount; i++)
       {
         var b = buildingService.buildings[i];
-        self.totalTerritory += b.territoryGain * b.count;
+        self.statModel.totalTerritory += b.territoryGain * b.count;
       }
     }
 
     recalculateInfluence = function(){
-      self.influenceRate = 0;
+      self.statModel.influenceRate = 0;
       for (var i = 0; i < buildingService.buildingCount; i++)
       {
         var b = buildingService.buildings[i];
-        self.influenceRate += b.influenceRate * b.count;
+        self.statModel.influenceRate += b.influenceRate * b.count;
       }
-      self.influence += self.influenceRate / self.ticksPerGameHour;
+      self.statModel.influence += self.statModel.influenceRate / self.statModel.ticksPerGameHour;
     }
 
 

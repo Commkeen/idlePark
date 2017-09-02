@@ -9,16 +9,16 @@ function techListController($scope, techService, statService){
     }
 
     $scope.isTechLocked = function(index){
-        return techService.techs[index].visitorRequirement > statService.visitorsTotal;
+        return techService.techs[index].visitorRequirement > statService.statModel.visitorsTotal;
     }
 
     $scope.canAffordTech = function(index){
         var cost = techService.techs[index].cost;
-        return cost <= statService.money;
+        return cost <= statService.statModel.money;
     }
 
     $scope.onClickTech = function(index){
-        statService.money -= techService.techs[index].cost;
+        statService.statModel.money -= techService.techs[index].cost;
         techService.purchaseTech(index);
     }
 }
