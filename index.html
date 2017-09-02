@@ -25,22 +25,22 @@
     <div class="section-left">
       <div class="section-left-top">
         <!--Ticks: {{ticksTotal}} <br />-->
-        <span class="cash">${{(money/100).toFixed(2)}}</span><br />
-        Lifetime visitors: {{visitorsTotal.toFixed(0)}}<br />
+        <span class="cash">${{(stats.money/100).toFixed(2)}}</span><br />
+        Lifetime visitors: {{stats.visitorsTotal.toFixed(0)}}<br />
         {{getDateTime()}}
 
       </div>
       <div class="section-left-bottom">
-        Visitors/hour: {{baseVisitorRate.toFixed(0)}} (Max: {{visitorRateCap.toFixed(0)}})<br />
-        <span ng-if="baseVisitorRate >= visitorRateCap">Your park is too small!</span>
+        Visitors/hour: {{stats.baseVisitorRate.toFixed(0)}} (Max: {{stats.visitorRateCap.toFixed(0)}})<br />
+        <span ng-if="stats.baseVisitorRate >= stats.visitorRateCap">Your park is too small!</span>
         <br />
         <br />
-        Income/visitor: ${{(incomePerVisitor/100).toFixed(2)}}<br />
+        Income/visitor: ${{(stats.incomePerVisitor/100).toFixed(2)}}<br />
         <br />
-        {{(usedTerritory/100).toFixed(2)}}/{{(totalTerritory/100).toFixed(2)}} Acres<br />
+        {{(stats.usedTerritory/100).toFixed(2)}}/{{(stats.totalTerritory/100).toFixed(2)}} Acres<br />
         <br />
-        Influence: {{(influence).toFixed(0)}}<br />
-        Influence/hr: {{influenceRate.toFixed(2)}}
+        Influence: {{(stats.influence).toFixed(0)}}<br />
+        Influence/hr: {{stats.influenceRate.toFixed(2)}}
       </div>
     </div>
     <div class="section-center">
