@@ -3,7 +3,8 @@ function building(name) {
     this.description = "blank";
     this.unlocked = false;
 
-    
+    this.operatingProfit = new Map();
+    this.operatingCost = new Map();
 
     this.index = 0;
     this.count = 0;
@@ -28,24 +29,18 @@ function building(name) {
         this.influenceCostMultiplier = costMultiplier;
         return this;
     }
-    this.setAttractionValues = function(income, visitRate, visitCap) {
-        this.incomePerVisitor = income;
-        this.visitorRateCap = visitCap;
-        this.visitorRate = visitRate;
+    this.addOperatingCost = function(resource, amount) {
+        this.operatingCost.set(resource, amount);
         return this;
     }
-    this.setPoliticsValues = function(territoryGain, territoryRate, influenceRate) {
-        this.territoryGain = territoryGain;
-        this.territoryRate = territoryRate;
-        this.influenceRate = influenceRate;
+    this.addOperatingProfit = function(resource, amount) {
+        this.operatingProfit.set(resource, amount);
         return this;
     }
 
     this.setCashCost(0,0);
     this.setTerritoryCost(0);
     this.setInfluenceCost(0,0);
-    this.setAttractionValues(0,0,0);
-    this.setPoliticsValues(0,0,0);
 }
 
 angular.module('gameApp').service("buildingService", buildingService);
@@ -63,7 +58,6 @@ function buildingService($rootScope) {
         self.buildingCount++;
         return self.buildings[self.buildingCount-1];
     }
-
 
     getBuildingIndex = function(name) {
         for (var i = 0; i < self.buildingCount; i++)
@@ -91,8 +85,8 @@ function buildingService($rootScope) {
         b.nextCost += b.nextCost * b.costMultiplier;
 
         //Special unlock logic
-        if (b.name == "Swingset" && b.count == 1){unlockBuilding("Bench");}
-        if (b.name == "Bench" && b.count == 1){unlockBuilding("Donation Box");}
+        //if (b.name == "Swingset" && b.count == 1){unlockBuilding("Bench");}
+        //if (b.name == "Bench" && b.count == 1){unlockBuilding("Donation Box");}
 
         $rootScope.$emit('building:update');
     }
@@ -101,12 +95,6 @@ function buildingService($rootScope) {
         unlockBuilding(data);
     })
 
-    registerBuilding("Swingset").setCashCost(100, 0.15).setAttractionValues(2,3,0.2).unlock();
-    registerBuilding("Bench").setCashCost(120, 0.15).setAttractionValues(0,0.1,2);
-    registerBuilding("Donation Box").setCashCost(110, 0.15).setAttractionValues(4,0,0);
-
-    registerBuilding("Corn Dog Stand").setCashCost(150, 0.15).setTerritoryCost(8).setAttractionValues(25,3,0.1);
-
-    registerBuilding("Land Grant").setCashCost(10000, 0.45).setInfluenceCost(1,1.1).setPoliticsValues(100,0,0);
-    registerBuilding("Grassroots Supporter").setCashCost(10000, 0.35).setInfluenceCost(0,0).setPoliticsValues(0,0,1);
+    registerBuilding("Swingset").setCashCost(100, 0.15)
+            .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 1).unlock();
 }

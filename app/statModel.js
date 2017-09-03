@@ -1,7 +1,5 @@
 function statModel() {
     var self = this;
-
-    this.baseVisitorRateCap = 5;
     
     this.ticksPerSecond = 100;
     this.ticksPerGameHour = 500;
@@ -9,17 +7,25 @@ function statModel() {
 
     this.ticksTotal = 0;
 
+    this.lifetimeVisitors = 0;
+
+    this.idleVisitors = 0;
     this.money = 500;
-    this.visitorsTotal = 0;
-    this.incomePerVisitor = 0;
-    this.visitorRateCap = 0;
-    this.baseVisitorRate = 0;
-    this.visitorRateAfterCap = 0;
-    this.visitorRate = 0;
+    this.happiness = 0;
+    this.influence = 0;
+
+    this.parkCapacity = 0;
+    this.baseParkCapacity = 20;
+
+    this.baseVisitorRate = 1.2; //Trickle of visitors with no dependencies
+    this.rawVisitorRate = 0; //Base visitors + visitors from other sources, before accounting for overcrowding
+    this.adjustedVisitorRate = 0; //What we display and what we actually add to the visitor count
+
+    this.crowdThreshold = 70; //Percentage of max visitors at which overcrowding starts to happen
+
+    this.influenceRate = 0;
 
     this.baseTerritory = 150;
     this.totalTerritory = 0;
     this.usedTerritory = 0;
-    this.influence = 0;
-    this.influenceRate = 0;
 }

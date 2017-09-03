@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="style.css" />
   <script src="app/statModel.js"></script>
   <script src="app/gameController.js"></script>
+  <script src="app/actionService.js"></script>
+  <script src="app/actionListController.js"></script>
   <script src="app/buildingService.js"></script>
   <script src="app/buildingListController.js"></script>
   <script src="app/techService.js"></script>
@@ -25,17 +27,15 @@
     <div class="section-left">
       <div class="section-left-top">
         <!--Ticks: {{ticksTotal}} <br />-->
+        <span class="happiness">&#x2764;{{(stats.happiness).toFixed(0)}}</span><br />
         <span class="cash">${{(stats.money/100).toFixed(2)}}</span><br />
-        Lifetime visitors: {{stats.visitorsTotal.toFixed(0)}}<br />
+        Lifetime visitors: {{stats.lifetimeVisitors.toFixed(0)}}<br />
         {{getDateTime()}}
 
       </div>
       <div class="section-left-bottom">
-        Visitors/hour: {{stats.baseVisitorRate.toFixed(0)}} (Max: {{stats.visitorRateCap.toFixed(0)}})<br />
-        <span ng-if="stats.baseVisitorRate >= stats.visitorRateCap">Your park is too small!</span>
-        <br />
-        <br />
-        Income/visitor: ${{(stats.incomePerVisitor/100).toFixed(2)}}<br />
+        Idle Visitors: {{stats.idleVisitors.toFixed(0)}} (Max: {{stats.parkCapacity.toFixed(0)}})<br />
+        <span ng-if="stats.idleVisitors/stats.parkCapacity > stats.crowdThreshold">Your park is too small!</span>
         <br />
         {{(stats.usedTerritory/100).toFixed(2)}}/{{(stats.totalTerritory/100).toFixed(2)}} Acres<br />
         <br />
@@ -44,17 +44,24 @@
       </div>
     </div>
     <div class="section-center">
+      <div class="actionList" ng-controller="actionListController">
+        <div class="actionButtonContainer" ng-repeat="action in actions" ng-if="isActionVisible(action.index)">
+          <button type='button' class='btn' ng-class="canAffordAction(action.index)?'btn-primary':'btn-disabled'" 
+                  ng-click="onClickAction(action.index)">{{action.name}}</button>
+        </div>
+      </div>
+      <hr />
       <div class="buildingList" ng-controller="buildingListController">
         <div class="buildingButtonContainer" ng-repeat="building in buildings" ng-if="isBuildingVisible(building.index)">
           <button type='button' class='btn' uib-popover-template="'app/buildingTooltipTemplate.html'" popover-trigger="'mouseenter'" popover-placement="auto bottom" ng-class="canAffordBuilding(building.index)?'btn-primary':'btn-disabled'" 
-                  ng-click="onClickBuilding(building.index)">{{building.name}} ${{(building.nextCost/100).toFixed(2)}} {{building.count}}</button>
+                  ng-click="onClickBuilding(building.index)">{{building.name}} | ${{(building.nextCost/100).toFixed(2)}} {{building.count}}</button>
         </div>
       </div>
       <hr />
       <div class="upgradeList" ng-controller="techListController">
         <div class="techButtonContainer" ng-repeat="tech in techs" ng-if="isTechVisible(tech.index)">
           <button type='button' class='btn' ng-class="isTechLocked(tech.index)?'btn-info':(canAffordTech(tech.index)?'btn-primary':'btn-disabled')"
-                  ng-click="onClickTech(tech.index)">{{isTechLocked(tech.index)?'Visitors: '+tech.visitorRequirement:tech.name}} ${{(tech.cost/100).toFixed(2)}}</button>
+                  ng-click="onClickTech(tech.index)">{{isTechLocked(tech.index)?'Visitors: '+tech.visitorRequirement:tech.name}} | ${{(tech.cost/100).toFixed(2)}}</button>
           <br />
         </div>
 
