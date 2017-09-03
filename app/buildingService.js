@@ -96,5 +96,5 @@ function buildingService($rootScope) {
     })
 
     registerBuilding("Swingset").setCashCost(100, 0.15)
-            .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 1).unlock();
+            .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 4).unlock();
 }

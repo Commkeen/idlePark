@@ -5,6 +5,7 @@ controller('GameController',
   function($scope, $interval, buildingService, statService, techService) {
 
     $scope.stats = statService.statModel;
+    $scope.Math = Math;
 
     $scope.getDateTime = function() {
       let currentDateInMs = statService.statModel.startDate.valueOf();

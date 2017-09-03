@@ -9,10 +9,12 @@ function actionListController($scope, actionService, statService){
     }
 
     $scope.canAffordAction = function(index){
-        
+        return actionService.canAffordAction(index);
     }
 
     $scope.onClickAction = function(index){
-
+        if (!$scope.canAffordAction(index)) {return;}
+        actionService.payActionCosts(index);
+        actionService.gainActionProfits(index);
     }
 }

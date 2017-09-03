@@ -2,9 +2,22 @@ function action(name) {
     this.name = name;
     this.description = "";
     this.unlocked = false;
+    this.cost = new Map();
+    this.profit = new Map();
+    this.cooldown = 0;
+    this.currentCooldown = 0;
 
     this.unlock = function(){
         this.unlocked = true;
+        return this;
+    }
+
+    this.addCost = function(resource, amount){
+        this.cost.set(resource, amount);
+        return this;
+    }
+    this.addProfit = function(resource, amount){
+        this.profit.set(resource, amount);
         return this;
     }
 }
@@ -17,6 +30,31 @@ function actionService($rootScope, statService) {
 
     this.actions = [];
     this.actionCount = 0;
+
+    this.canAffordAction = function(index) {
+        var action = self.actions[index];
+        var canAfford = true;
+        action.cost.forEach(function(value, key, map) {
+            if (statService.statModel[key] < value){
+                canAfford = false;
+            }
+        });
+        return canAfford;
+    }
+
+    this.payActionCosts = function(index) {
+        var action = self.actions[index];
+        action.cost.forEach(function(value, key, map) {
+            statService.statModel[key] -= value;
+        });
+    }
+
+    this.gainActionProfits = function(index) {
+        var action = self.actions[index];
+        action.profit.forEach(function(value, key, map) {
+            statService.statModel[key] += value;
+        });
+    }
 
     registerAction = function(name) {
         self.actions[self.actionCount] = new action(name);
@@ -45,5 +83,5 @@ function actionService($rootScope, statService) {
         }
     }
 
-    registerAction("Ask For Donations").unlock();
+    registerAction("Ask For Donations").addCost('happiness', 5).addProfit('money', 100).unlock();
 }

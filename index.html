@@ -27,7 +27,7 @@
     <div class="section-left">
       <div class="section-left-top">
         <!--Ticks: {{ticksTotal}} <br />-->
-        <span class="happiness">&#x2764;{{(stats.happiness).toFixed(0)}}</span><br />
+        <span class="happiness">&#x2764;{{Math.floor(stats.happiness)}}</span><br />
         <span class="cash">${{(stats.money/100).toFixed(2)}}</span><br />
         Lifetime visitors: {{stats.lifetimeVisitors.toFixed(0)}}<br />
         {{getDateTime()}}
