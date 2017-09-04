@@ -27,17 +27,26 @@ function statService($rootScope, buildingService) {
 
     recalculateBuildingCostAndProfit = function(){
       var statModel = self.statModel;
+
+      statModel.moneyRate = 0;
+      statModel.happinessRate = 0;
+      statModel.influenceRate = 0;
+
       buildingService.buildings.forEach(function(b) {
         var efficiency = 1;
         var cost = b.operatingCost.values().next().value;
         var costResource = b.operatingCost.keys().next().value;
-        if (cost*b.count/statModel.ticksPerGameHour > statModel[costResource]) {efficiency = 0;} //TODO: Proper scaling on insufficient inputs
-        else {statModel[costResource] -= cost*b.count/statModel.ticksPerGameHour;}
-        
+        if (cost*b.count/statModel.ticksPerGameHour > statModel[costResource]){
+          efficiency = statModel[costResource] / (cost*b.count/statModel.ticksPerGameHour);
+        }
+        statModel[costResource] -= Math.min(cost*b.count*efficiency/statModel.ticksPerGameHour, statModel[costResource]);
+        statModel[costResource + 'Rate'] -= cost*b.count*efficiency;
+        statModel[costResource + 'Rate'] = Math.round(statModel[costResource + 'Rate']*100)/100;
         var profit = b.operatingProfit.values().next().value;
         var profitResource = b.operatingProfit.keys().next().value;
         statModel[profitResource] += profit*b.count*efficiency/statModel.ticksPerGameHour;
-
+        statModel[profitResource + 'Rate'] += profit*b.count*efficiency;
+        statModel[profitResource + 'Rate'] = Math.round(statModel[profitResource + 'Rate']*100)/100;
       });
     }
 
