@@ -2,8 +2,12 @@ function action(name) {
     this.name = name;
     this.description = "";
     this.unlocked = false;
+
+    this.unlockOnBuildings = new Map();
+
     this.cost = new Map();
     this.profit = new Map();
+    
     this.cooldown = 0;
     this.currentCooldown = 0;
 
@@ -20,12 +24,15 @@ function action(name) {
         this.profit.set(resource, amount);
         return this;
     }
+    this.addUnlockOnBuilding = function(building, amount) {
+        this.unlockOnBuildings.set(building, amount);
+    }
 }
 
 angular.module('gameApp').service("actionService", actionService);
-actionService.$inject = ['$rootScope', 'statService'];
+actionService.$inject = ['$rootScope', 'statService', 'buildingService'];
 
-function actionService($rootScope, statService) {
+function actionService($rootScope, statService, buildingService) {
     var self = this;
 
     this.actions = [];
@@ -83,5 +90,25 @@ function actionService($rootScope, statService) {
         }
     }
 
-    registerAction("Ask For Donations").addCost('happiness', 5).addProfit('money', 100).unlock();
+    let checkAndProcessUnlocks = function() {
+        self.actions.forEach(function(a) {
+            if (a.unlocked){return;}
+            if (a.unlockOnBuildings.size == 0){return;}
+            var shouldUnlock = true;
+            a.unlockOnBuildings.forEach(function(value, key, map){
+                if (buildingService.buildings[getBuildingIndex(key)].count < value){
+                    shouldUnlock = false;
+                }
+            });
+            if (shouldUnlock){
+                unlockAction(a.name);
+            }
+        });
+    }
+
+    $rootScope.$on('building:update', function (event, data) {
+        checkAndProcessUnlocks();
+    })
+
+    registerAction("Ask For Donations").addCost('happiness', 5).addProfit('money', 100).addUnlockOnBuilding('Swingset', 1);
 }

@@ -3,6 +3,8 @@ function building(name) {
     this.description = "blank";
     this.unlocked = false;
 
+    this.unlockOnBuildings = new Map();
+
     this.operatingProfit = new Map();
     this.operatingCost = new Map();
 
@@ -36,6 +38,9 @@ function building(name) {
     this.addOperatingProfit = function(resource, amount) {
         this.operatingProfit.set(resource, amount);
         return this;
+    }
+    this.addUnlockOnBuilding = function(building, amount) {
+        this.unlockOnBuildings.set(building, amount);
     }
 
     this.setCashCost(0,0);
@@ -79,6 +84,22 @@ function buildingService($rootScope) {
         }
     }
 
+    let checkAndProcessUnlocks = function() {
+        self.buildings.forEach(function(b) {
+            if (b.unlocked){return;}
+            if (b.unlockOnBuildings.size == 0){return;}
+            var shouldUnlock = true;
+            b.unlockOnBuildings.forEach(function(value, key, map){
+                if (self.buildings[getBuildingIndex(key)].count < value){
+                    shouldUnlock = false;
+                }
+            });
+            if (shouldUnlock){
+                unlockBuilding(b.name);
+            }
+        });
+    }
+
     this.addBuilding = function(index, amount){
         var b = this.buildings[index];
         b.count += amount;
@@ -91,10 +112,16 @@ function buildingService($rootScope) {
         $rootScope.$emit('building:update');
     }
 
+    $rootScope.$on('building:update', function (event, data) {
+        checkAndProcessUnlocks();
+    })
+
     $rootScope.$on('building:unlock', function (event, data) {
         unlockBuilding(data);
     })
 
-    registerBuilding("Swingset").setCashCost(100, 0.15)
+    registerBuilding("Swingset").setCashCost(300, 0.15)
             .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 4).unlock();
+    registerBuilding("Donation Box").setCashCost(300, 0.17)
+            .addOperatingCost('happiness', 1).addOperatingProfit('money', 20).addUnlockOnBuilding('Swingset', 3);
 }
