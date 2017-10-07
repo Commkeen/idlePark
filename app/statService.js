@@ -17,12 +17,19 @@ function statService($rootScope, buildingService) {
 
       statModel.adjustedVisitorRate = statModel.rawVisitorRate;
 
+      //TODO: Nighttime logic
+      if (self.statModel.nighttime)
+      {
+        statModel.adjustedVisitorRate = 0;
+      }
+
       var visitorsThisTick = statModel.adjustedVisitorRate / statModel.ticksPerGameHour;
       var cap = statModel.parkCapacity - statModel.idleVisitors;
       if (visitorsThisTick > cap) {visitorsThisTick = cap;}
 
       statModel.idleVisitors += visitorsThisTick;
       statModel.lifetimeVisitors += visitorsThisTick;
+      statModel.idleVisitorsRate = statModel.adjustedVisitorRate;
     }
 
     recalculateBuildingCostAndProfit = function(){
@@ -65,8 +72,17 @@ function statService($rootScope, buildingService) {
       self.statModel.totalTerritory = self.statModel.baseTerritory;
     }
 
+    calculateTimeOfDay = function(){
+      let currentDateInMs = self.statModel.startDate.valueOf();
+      let hoursToAdd = self.statModel.ticksTotal / self.statModel.ticksPerGameHour;
+      let msToAdd = hoursToAdd * 60 * 60 * 1000;
+      let date = new Date(currentDateInMs + msToAdd);
+      self.statModel.nighttime = (date.getHours() < 7 || date.getHours() > 19);
+    }
+
 
     this.recalculateStats = function(){
+      calculateTimeOfDay();
       recalculateVisitors();
       recalculateBuildingCostAndProfit();
       recalculateTerritory();

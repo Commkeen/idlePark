@@ -7,10 +7,12 @@ function statModel() {
 
     this.ticksTotal = 0;
 
+    this.nighttime = false;
+
     this.lifetimeVisitors = 0;
 
     this.idleVisitors = 0;
-    this.money = 99500;
+    this.money = 500;
     this.happiness = 0;
     this.influence = 0;
 

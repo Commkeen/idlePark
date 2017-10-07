@@ -30,9 +30,11 @@
         <div class="happiness">&#x2764;{{Math.floor(stats.happiness)}}</div>
         <div class="rate">({{stats.happinessRate.toFixed(2)}}/hr)</div><br />
         <div class="cash">${{(stats.money/100).toFixed(2)}}</div>
-        <div class="rate">({{(stats.moneyRate/100).toFixed(2)}}/hr)</div><br /><br />
+        <div class="rate">({{(stats.moneyRate/100).toFixed(2)}}/hr)</div><br />
+        <div class="visitors">&#x263A;{{Math.floor(stats.idleVisitors)}}/{{stats.parkCapacity.toFixed(0)}}</div>
+        <div class="rate">({{stats.idleVisitorsRate.toFixed(2)}}/hr){{stats.nighttime?'(Night)':''}}</div><br /><br />
         Lifetime visitors: {{stats.lifetimeVisitors.toFixed(0)}}<br />
-        {{getDateTime()}}
+        {{getDateTime()}} {{stats.nighttime?'(Night)':'(Day)'}}
 
       </div>
       <div class="section-left-bottom">
