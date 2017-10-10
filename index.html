@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="app/statModel.js"></script>
+  <script src="app/workerModel.js"></script>
   <script src="app/gameController.js"></script>
   <script src="app/actionService.js"></script>
   <script src="app/actionListController.js"></script>
@@ -17,6 +18,8 @@
   <script src="app/techService.js"></script>
   <script src="app/techListController.js"></script>
   <script src="app/statService.js"></script>
+  <script src="app/workerService.js"></script>
+  <script src="app/workerListController.js"></script>
 </head>
 
 <body>
@@ -73,6 +76,13 @@
     </div>
     <div class="section-right">
       <div class="section-right-top">
+          <div class="workerList" ng-controller="workerListController">
+              Idle workers: {{workerModel.freeWorkers}}/{{workerModel.totalWorkers}}
+              <br/><br/>
+              <div class="jobContainer" ng-repeat="job in workerModel.jobs" ng-if="isJobVisible(job.index)">
+                <a ng-click="freeWorker(job.index)">&ndash;</a> {{job.name}}: {{job.workerCount}} <a ng-click="assignWorker(job.index)">+</a>
+              </div>
+            </div>
       </div>
       <div class="section-right-center">
         

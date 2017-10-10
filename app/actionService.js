@@ -34,6 +34,7 @@ actionService.$inject = ['$rootScope', 'statService', 'buildingService'];
 
 function actionService($rootScope, statService, buildingService) {
     var self = this;
+    self.buildingService = buildingService;
 
     this.actions = [];
     this.actionCount = 0;
@@ -96,7 +97,7 @@ function actionService($rootScope, statService, buildingService) {
             if (a.unlockOnBuildings.size == 0){return;}
             var shouldUnlock = true;
             a.unlockOnBuildings.forEach(function(value, key, map){
-                if (buildingService.buildings[getBuildingIndex(key)].count < value){
+                if (self.buildingService.buildings[getBuildingIndex(key)].count < value){
                     shouldUnlock = false;
                 }
             });

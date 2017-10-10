@@ -5,6 +5,7 @@ function statService($rootScope, buildingService) {
     var self = this;
 
     this.statModel = new statModel();
+    this.workerModel = new workerModel();
 
     recalculateVisitors = function(){
       var statModel = self.statModel;
@@ -57,6 +58,19 @@ function statService($rootScope, buildingService) {
       });
     }
 
+    recalculateWorkerProfit = function(){
+      var statModel = self.statModel;
+      var workerModel = self.workerModel;
+
+      workerModel.jobs.forEach(function(j) {
+        var profit = j.profit.values().next().value;
+        var profitResource = j.profit.keys().next().value;
+        statModel[profitResource] += profit*j.workerCount/statModel.ticksPerGameHour;
+        statModel[profitResource + 'Rate'] += profit*j.workerCount;
+        statModel[profitResource + 'Rate'] = Math.round(statModel[profitResource + 'Rate']*100)/100;
+      });
+    }
+
     recalculateMoney = function(){
       self.statModel.incomePerVisitor = 0;
       for (var i = 0; i < buildingService.buildingCount; i++)
@@ -85,6 +99,7 @@ function statService($rootScope, buildingService) {
       calculateTimeOfDay();
       recalculateVisitors();
       recalculateBuildingCostAndProfit();
+      recalculateWorkerProfit();
       recalculateTerritory();
 
     }
