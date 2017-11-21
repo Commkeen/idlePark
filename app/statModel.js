@@ -22,6 +22,7 @@ function statModel() {
     this.baseVisitorRate = 3.2; //Trickle of visitors with no dependencies
     this.rawVisitorRate = 0; //Base visitors + visitors from other sources, before accounting for overcrowding
     this.adjustedVisitorRate = 0; //What we display and what we actually add to the visitor count
+    this.rideCapacity = 0; //How many visitors are consumed/hr
 
     this.crowdThreshold = 70; //Percentage of max visitors at which overcrowding starts to happen
 
@@ -29,7 +30,7 @@ function statModel() {
     this.happinessRate = 0;
     this.influenceRate = 0;
 
-    this.baseTerritory = 150;
+    this.baseTerritory = 25;
     this.totalTerritory = 0;
     this.usedTerritory = 0;
 }

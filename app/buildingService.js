@@ -120,7 +120,7 @@ function buildingService($rootScope) {
         unlockBuilding(data);
     })
 
-    registerBuilding("Swingset").setCashCost(300, 0.35)
+    registerBuilding("Swingset").setCashCost(300, 0.35).setTerritoryCost(1)
             .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 4).unlock();
     registerBuilding("Donation Box").setCashCost(300, 0.27)
             .addOperatingCost('happiness', 1).addOperatingProfit('money', 14).addUnlockOnBuilding('Swingset', 3);

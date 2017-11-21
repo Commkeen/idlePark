@@ -6,6 +6,7 @@ function job(name)
     this.workerCount = 0;
 
     this.profit = new Map();
+    this.profitPerIdleVisitor = new Map();
 
     this.unlock = function(){
         this.unlocked = true;
@@ -16,11 +17,18 @@ function job(name)
         this.profit.set(resource, amount);
         return this;
     }
+
+    this.addProfitPerIdleVisitor = function(resource, amount){
+        this.profitPerIdleVisitor.set(resource, amount);
+        return this;
+    }
 }
 
 function workerModel(){
-    this.totalWorkers = 10;
-    this.freeWorkers = 10;
+    this.totalWorkers = 1;
+    this.freeWorkers = 1;
+
+    this.costPerWorker = 100;
 
     this.jobs = [];
     this.jobCount = 0;

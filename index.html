@@ -42,6 +42,8 @@
       </div>
       <div class="section-left-bottom">
         Idle Visitors: {{stats.idleVisitors.toFixed(0)}} (Max: {{stats.parkCapacity.toFixed(0)}})<br />
+        Visitors Entering: {{stats.adjustedVisitorRate.toFixed(2)}}/hr<br />
+        Ride Capacity: {{stats.rideCapacity.toFixed(2)}}/hr<br />
         <span ng-if="stats.idleVisitors/stats.parkCapacity > stats.crowdThreshold">Your park is too small!</span>
         <br />
         {{(stats.usedTerritory/100).toFixed(2)}}/{{(stats.totalTerritory/100).toFixed(2)}} Acres<br />

@@ -39,6 +39,7 @@ function statService($rootScope, buildingService) {
       statModel.moneyRate = 0;
       statModel.happinessRate = 0;
       statModel.influenceRate = 0;
+      statModel.rideCapacity = 0;
 
       buildingService.buildings.forEach(function(b) {
         var efficiency = 1;
@@ -55,6 +56,11 @@ function statService($rootScope, buildingService) {
         statModel[profitResource] += profit*b.count*efficiency/statModel.ticksPerGameHour;
         statModel[profitResource + 'Rate'] += profit*b.count*efficiency;
         statModel[profitResource + 'Rate'] = Math.round(statModel[profitResource + 'Rate']*100)/100;
+
+        if (costResource == 'idleVisitors')
+        {
+          statModel.rideCapacity += cost*b.count;
+        }
       });
     }
 
@@ -68,6 +74,12 @@ function statService($rootScope, buildingService) {
         statModel[profitResource] += profit*j.workerCount/statModel.ticksPerGameHour;
         statModel[profitResource + 'Rate'] += profit*j.workerCount;
         statModel[profitResource + 'Rate'] = Math.round(statModel[profitResource + 'Rate']*100)/100;
+
+        var profitPerIdleVisitor = j.profitPerIdleVisitor.values().next().value;
+        var profitPerIdleVisitorResource = j.profitPerIdleVisitor.keys().next().value;
+        statModel[profitPerIdleVisitorResource] += profitPerIdleVisitor*j.workerCount*Math.floor(statModel.idleVisitors)/statModel.ticksPerGameHour;
+        statModel[profitPerIdleVisitorResource + 'Rate'] += profitPerIdleVisitor*j.workerCount*Math.floor(statModel.idleVisitors);
+        statModel[profitPerIdleVisitorResource + 'Rate'] = Math.round(statModel[profitPerIdleVisitorResource + 'Rate']*100)/100;
       });
     }
 
