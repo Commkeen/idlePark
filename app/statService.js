@@ -25,8 +25,6 @@ function statService($rootScope, buildingService) {
       }
 
       var visitorsThisTick = statModel.adjustedVisitorRate / statModel.ticksPerGameHour;
-      var cap = statModel.parkCapacity - statModel.idleVisitors;
-      if (visitorsThisTick > cap) {visitorsThisTick = cap;}
 
       statModel.idleVisitors += visitorsThisTick;
       statModel.lifetimeVisitors += visitorsThisTick;

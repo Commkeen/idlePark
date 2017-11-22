@@ -48,6 +48,6 @@ function workerService($rootScope, statService) {
         freeWorker(data);
     })
 
-    registerJob("Vendor").addProfitPerIdleVisitor('money', 100).unlock();
-    registerJob("Entertainer").addProfitPerIdleVisitor('happiness', 1).unlock();
+    registerJob("Vendor").addProfitPerIdleVisitor('money', 100);
+    registerJob("Entertainer").addProfitPerIdleVisitor('happiness', 1);
 }

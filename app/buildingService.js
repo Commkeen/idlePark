@@ -119,9 +119,17 @@ function buildingService($rootScope) {
     $rootScope.$on('building:unlock', function (event, data) {
         unlockBuilding(data);
     })
-
-    registerBuilding("Swingset").setCashCost(300, 0.35).setTerritoryCost(1)
-            .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 4).unlock();
+    registerBuilding("Bench").setCashCost(225, 0.45)
+            .addOperatingProfit('idleVisitors', 1).unlock();
+    registerBuilding("Tire Swing").setCashCost(200, 0.35).setTerritoryCost(1)
+            .addOperatingCost('idleVisitors', 1).addOperatingProfit('happiness', 4).addUnlockOnBuilding('Bench', 1);
     registerBuilding("Donation Box").setCashCost(300, 0.27)
-            .addOperatingCost('happiness', 1).addOperatingProfit('money', 14).addUnlockOnBuilding('Swingset', 3);
+            .addOperatingCost('happiness', 3).addOperatingProfit('money', 42).addUnlockOnBuilding('Tire Swing', 3);
+    
+    registerBuilding("Campground").setCashCost(13225, 0.25)
+            .addOperatingProfit('idleVisitors', 22).addUnlockOnBuilding('Bench', 5);
+    registerBuilding("Carousel").setCashCost(15035, 0.30)
+            .addOperatingCost('idleVisitors', 10).addOperatingProfit('happiness', 40).addUnlockOnBuilding('Tire Swing', 10);
+    registerBuilding("Corndog Stand").setCashCost(12580, 0.30)
+            .addOperatingCost('happiness', 15).addOperatingProfit('money', 200).addUnlockOnBuilding('Donation Box', 5);
 }

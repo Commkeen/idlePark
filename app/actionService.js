@@ -111,5 +111,5 @@ function actionService($rootScope, statService, buildingService) {
         checkAndProcessUnlocks();
     })
 
-    registerAction("Ask For Donations").addCost('happiness', 5).addProfit('money', 100).addUnlockOnBuilding('Swingset', 1);
+    registerAction("Ask For Donations").addCost('happiness', 5).addProfit('money', 100).addUnlockOnBuilding('Tire Swing', 1);
 }

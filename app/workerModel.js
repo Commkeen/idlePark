@@ -25,8 +25,8 @@ function job(name)
 }
 
 function workerModel(){
-    this.totalWorkers = 1;
-    this.freeWorkers = 1;
+    this.totalWorkers = 0;
+    this.freeWorkers = 0;
 
     this.costPerWorker = 100;
 
